@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Card, CardContent, TextField, Button, Typography } from '@mui/material';
 
 export default function SignIn() {
     const [formData, setFormData] = useState({
@@ -21,37 +22,44 @@ export default function SignIn() {
 
     return (
         <div className="max-w-md mx-auto p-4">
-            <h2 className="text-2xl font-semibold mb-4">Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Username</label>
-                    <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                >
-                    Login
-                </button>
-            </form>
+            <Card>
+                <CardContent>
+                    <Typography variant="h5" component="div" className="text-center mb-4">
+                        Login
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            type="text"
+                            name="username"
+                            label="Username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                            required
+                        />
+                        <TextField
+                            type="password"
+                            name="password"
+                            label="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                            required
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            className="mt-4"
+                        >
+                            Login
+                        </Button>
+                    </form>
+                </CardContent>
+            </Card>
         </div>
     );
 }
