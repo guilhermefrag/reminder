@@ -4,7 +4,8 @@ import Contact from './pages/Contact';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
-import Login from './pages/Login';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 export default function Router() {
     return (
@@ -14,7 +15,8 @@ export default function Router() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
         </Routes>
     );
 }

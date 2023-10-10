@@ -1,6 +1,5 @@
-export default function NotFound(statusCode: number) {
-    // Replace `status_code` with the desired HTTP status code, e.g., 404 for "Not Found"
-    statusCode = 404;
+export default function NotFound() {
+    const statusCode = 404;
     const imageUrl = `https://http.cat/${statusCode}`;
 
     return (

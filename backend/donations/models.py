@@ -1,9 +1,9 @@
 from uuid import UUID
 from django.db import models
-from django.contrib.auth.models import User
+
 # Create your models here.
-class Reminder(models.Model):
+class Donation(models.Model):
     uuid = models.UUIDField(primary_key=True, default=UUID.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.IntegerField()
+    url = models.CharField(max_length=1000)
