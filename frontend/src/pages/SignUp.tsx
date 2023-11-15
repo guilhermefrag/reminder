@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export default function SignUp() {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         console.log(formData);
+        axios.post()
     };
 
     return (

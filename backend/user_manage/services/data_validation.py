@@ -38,4 +38,3 @@ def email_validation(email):
         raise ValueError("The email domain is not valid")
 
     return True
-    return True

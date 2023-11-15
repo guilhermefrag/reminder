@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+from conf.settings import ADMIN_PASSWORD
+
 from .serializers import UserSerializer
 
 
@@ -20,8 +22,7 @@ def sign_up(request):
         email = request.data.get("email")
         admin_password = request.data.get("adminPassword")
 
-        # TODO: não esquecer de colocar um valor real na .env
-        if admin_password != "admin":
+        if admin_password != ADMIN_PASSWORD:
             raise ValueError("You are not authorized to create a new user.")
 
         if not username or not password:
