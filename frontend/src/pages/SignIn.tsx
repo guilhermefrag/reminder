@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, TextField, Button, Typography } from '@mui/material';
 
 type LoginScreenProps = {
     setAuthToken: React.Dispatch<React.SetStateAction<string | null>>;
@@ -12,10 +12,7 @@ export default function SignIn({ setAuthToken }: LoginScreenProps) {
     const handleNavigate = (path: string) => {
         navigate(path);
     };
-=======
-import React, { useState } from 'react';
-import { Card, CardContent, TextField, Button, Typography } from '@mui/material';
->>>>>>> 379d09696cda518a47f112bc6c27f658880f1875
+
 
     const [formData, setFormData] = useState({
         username: '',
@@ -36,7 +33,6 @@ import { Card, CardContent, TextField, Button, Typography } from '@mui/material'
     };
 
     return (
-<<<<<<< HEAD
     <div className="max-w-md mx-auto p-4 flex flex-col items-center">
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <form onSubmit={handleSubmit} className="w-full">
@@ -80,47 +76,4 @@ import { Card, CardContent, TextField, Button, Typography } from '@mui/material'
         </form>
     </div>
 );
-=======
-        <div className="max-w-md mx-auto p-4">
-            <Card>
-                <CardContent>
-                    <Typography variant="h5" component="div" className="text-center mb-4">
-                        Login
-                    </Typography>
-                    <form onSubmit={handleSubmit}>
-                        <TextField
-                            type="text"
-                            name="username"
-                            label="Username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            required
-                        />
-                        <TextField
-                            type="password"
-                            name="password"
-                            label="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            required
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            className="mt-4"
-                        >
-                            Login
-                        </Button>
-                    </form>
-                </CardContent>
-            </Card>
-        </div>
-    );
->>>>>>> 379d09696cda518a47f112bc6c27f658880f1875
 }

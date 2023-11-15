@@ -62,7 +62,6 @@ export default function Header() {
                         Contact
                     </Button>
                 </Hidden>
-                {/* Add the "Login" button here */}
                 <Button color="inherit" onClick={() => handleNavigate('/login')}>
                     Login
                 </Button>
