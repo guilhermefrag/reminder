@@ -3,7 +3,9 @@ import { BrowserRouter } from 'react-router-dom'
 import Router from './Router'
 import { useState } from 'react';
 import axios from 'axios';
-import SignIn from './pages/SignIn';
+import PublicRouter from './PublicRouter';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 function App() {
     const [authToken, setAuthToken] = useState(localStorage.getItem('@token'));
@@ -13,7 +15,15 @@ function App() {
 
     if (!authToken?.length) {
         return (
-            <SignIn setAuthToken={setAuthToken}/>
+        <BrowserRouter>
+            <section className="app-body">
+                <div className="container-route">
+                    <Header />
+                    <PublicRouter/>
+                    <Toaster />
+                </div>
+            </section>
+        </BrowserRouter>
         );
     }
 
@@ -24,6 +34,7 @@ function App() {
                 <div className="container-route">
                     <Header />
                     <Router />
+                    <Toaster />
                 </div>
             </section>
         </BrowserRouter>

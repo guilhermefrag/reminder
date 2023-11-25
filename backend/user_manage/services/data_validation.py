@@ -28,10 +28,7 @@ def email_validation(email):
         raise ValueError("The email must have a valid domain")
     if email.endswith("."):
         raise ValueError("The email must have a valid domain")
-    
-    for ending in valid_email_endings:
-        print(ending)
-    
+
     username, domain = email.split("@")
     if not any(domain.endswith(ending) for ending in valid_email_endings):
         

@@ -1,17 +1,7 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, TextField, Button, Typography } from '@mui/material';
 
-type LoginScreenProps = {
-    setAuthToken: React.Dispatch<React.SetStateAction<string | null>>;
-};
-
-export default function SignIn({ setAuthToken }: LoginScreenProps) {
-    const navigate = useNavigate();
-
-    const handleNavigate = (path: string) => {
-        navigate(path);
-    };
+export default function SignIn() {
 
 
     const [formData, setFormData] = useState({
@@ -30,6 +20,8 @@ export default function SignIn({ setAuthToken }: LoginScreenProps) {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         console.log(formData);
+        axios.post("signin/", formData)
+        localStorage.setItem('@token', "123");
     };
 
     return (
@@ -58,22 +50,23 @@ export default function SignIn({ setAuthToken }: LoginScreenProps) {
                     required
                 />
             </div>
-            <div className="flex justify-between">
+        </form>
+        <div className="flex justify-center space-x-5">
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 w-[10em]"
+                    onClick={handleSubmit}
                 >
                     Login
                 </button>
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                    onClick={() => handleNavigate('/signup')}
+                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 w-[10em]"
+                    onClick={() => window.location.href = '/signup'}
                 >
                     Sign Up
                 </button>
             </div>
-        </form>
     </div>
 );
 }

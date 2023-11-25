@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
@@ -17,10 +19,20 @@ export default function SignUp() {
         });
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
-        console.log(formData);
-        axios.post()
+    
+        try {
+            const response = await axios.post("signup/", formData);
+            if (response.status === 200) {
+                toast.success("Sign up successful!");
+                window.location.href = "/"
+            } else {
+                toast.error(response.data);
+            }
+        } catch (error: any) {
+            toast.error(""+error.response.data.error);
+        }
     };
 
     return (

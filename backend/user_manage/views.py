@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.db import transaction
+from user_manage.models import UserExtraFields
 from user_manage.services.data_validation import email_validation
+from django.contrib.auth import authenticate, login
+
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -31,7 +34,7 @@ def sign_up(request):
             )
 
         if not email_validation(email):
-            raise ValueError()
+            raise ValueError("Error on email")
         
         if User.objects.filter(username=username).exists():
             raise ValueError("A user with this username already exists.")
@@ -41,6 +44,8 @@ def sign_up(request):
         )
         
         user_serialized = UserSerializer(user)
+
+        UserExtraFields.objects.create(user=user)
 
         return Response(user_serialized.data)
     except ValueError as error:
@@ -54,4 +59,36 @@ def sign_up(request):
         return Response(
             {"error": str(error)},
             status=status.HTTP_400_BAD_REQUEST,
+        )
+
+@api_view(["POST"])
+@transaction.atomic
+def sign_in(request):
+    try:
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        user = authenticate(request, username=username, password=password)
+        user_model =  User.objects.filter(username=username)
+
+        if user is not None:
+            # Authentication successful, log the user in
+            login(request, user)
+          
+            return Response({"message": "Login successful"})
+        else:
+            # Authentication failed
+            raise ValueError("Invalid username or password")
+
+    except ValueError as error:
+        transaction.set_rollback(True)
+        return Response(
+            {"error": str(error)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    except Exception as error:
+        transaction.set_rollback(True)
+        return Response(
+            {"error": str(error)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
