@@ -69,15 +69,13 @@ def sign_in(request):
         password = request.data.get("password")
 
         user = authenticate(request, username=username, password=password)
-        user_model =  User.objects.filter(username=username)
-
+        user_model = User.objects.filter(username=username).first()
+        
         if user is not None:
-            # Authentication successful, log the user in
+            user_token_model =  UserExtraFields.objects.filter(user=user_model)
             login(request, user)
-          
-            return Response({"message": "Login successful"})
+            return Response({"user": UserSerializer(user).data, "token": user_token_model.first().auth_token})
         else:
-            # Authentication failed
             raise ValueError("Invalid username or password")
 
     except ValueError as error:

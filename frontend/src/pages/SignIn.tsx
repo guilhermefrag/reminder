@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function SignIn() {
 
@@ -17,11 +18,21 @@ export default function SignIn() {
         });
     };
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
-        console.log(formData);
-        axios.post("signin/", formData)
-        localStorage.setItem('@token', "123");
+        
+        try {
+            const response = await axios.post("signin/", formData);
+            
+            if (response.status === 200) {
+                localStorage.setItem('@token', response.data.token);
+                toast.success('Login successful');
+            } else {
+                toast.error('Login failed');
+            }
+        } catch (error) {
+            toast.error(`${error.response.data.error}`);
+        }
     };
 
     return (
@@ -67,6 +78,7 @@ export default function SignIn() {
                     Sign Up
                 </button>
             </div>
+            <Toaster />
     </div>
 );
 }
