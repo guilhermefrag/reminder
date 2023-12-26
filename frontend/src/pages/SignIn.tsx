@@ -27,10 +27,11 @@ export default function SignIn() {
             if (response.status === 200) {
                 localStorage.setItem('@token', response.data.token);
                 toast.success('Login successful');
+                window.location.href = '/home';
             } else {
                 toast.error('Login failed');
             }
-        } catch (error) {
+        } catch (error: any) {
             toast.error(`${error.response.data.error}`);
         }
     };

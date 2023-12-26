@@ -13,17 +13,17 @@ from rest_framework import status
 from conf.settings import ADMIN_PASSWORD
 
 from .serializers import UserSerializer
+from django.db.models import QuerySet
 
 
-# Create your views here.
 @api_view(["POST"])
 @transaction.atomic
 def sign_up(request):
     try:
-        username = request.data.get("username")
-        password = request.data.get("password")
-        email = request.data.get("email")
-        admin_password = request.data.get("adminPassword")
+        username: str = request.data.get("username")
+        password: str = request.data.get("password")
+        email: str = request.data.get("email")
+        admin_password: str = request.data.get("adminPassword")
 
         if admin_password != ADMIN_PASSWORD:
             raise ValueError("You are not authorized to create a new user.")
@@ -35,15 +35,15 @@ def sign_up(request):
 
         if not email_validation(email):
             raise ValueError("Error on email")
-        
+
         if User.objects.filter(username=username).exists():
             raise ValueError("A user with this username already exists.")
 
         user = User.objects.create_user(
             username=username, password=password, email=email
         )
-        
-        user_serialized = UserSerializer(user)
+
+        user_serialized: QuerySet[UserSerializer] = UserSerializer(user)
 
         UserExtraFields.objects.create(user=user)
 
@@ -65,14 +65,14 @@ def sign_up(request):
 @transaction.atomic
 def sign_in(request):
     try:
-        username = request.data.get("username")
-        password = request.data.get("password")
+        username: str = request.data.get("username")
+        password: str = request.data.get("password")
 
         user = authenticate(request, username=username, password=password)
-        user_model = User.objects.filter(username=username).first()
+        user_model: User = User.objects.filter(username=username).first()
         
         if user is not None:
-            user_token_model =  UserExtraFields.objects.filter(user=user_model)
+            user_token_model: UserExtraFields =  UserExtraFields.objects.filter(user=user_model)
             login(request, user)
             return Response({"user": UserSerializer(user).data, "token": user_token_model.first().auth_token})
         else:
